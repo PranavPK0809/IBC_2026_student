@@ -28,3 +28,12 @@ There are 195 words
 
 4.	cat CodonTable.tsv
 TTT is the last codon
+
+
+# Git Code
+
+```bash
+git add Kumar_P1.md
+git commit -m "Added Week 1 practical answers in Markdown"
+git push
+```
