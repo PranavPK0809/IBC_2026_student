@@ -40,8 +40,6 @@ git push
 
 ## Final Problem 2
 
-I modified the semicolon-to-comma converter script so that the input file is provided as an argument when the script is run.
-
 ### Script: semicolon_csv_converter.sh
 
 ```bash
