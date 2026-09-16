@@ -37,3 +37,17 @@ git add Kumar_P1.md
 git commit -m "Added Week 1 practical answers in Markdown"
 git push
 ```
+
+## Final Problem 2
+
+I modified the semicolon-to-comma converter script so that the input file is provided as an argument when the script is run.
+
+### Script: semicolon_csv_converter.sh
+
+```bash
+#!/bin/bash
+
+input_file=$1
+output_file="converted_$(basename "$input_file")"
+
+tr ';' ',' < "$input_file" > "$output_file"
