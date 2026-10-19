@@ -32,7 +32,7 @@ ls
 
 
 
-I used `cut` to count how many times individuals 8 and 22 appeared in the data. The `-w` option matches the individual ID, and the `-c` counts the # of matching lines.
+I used `cut` to select individual columns and 'grep' was used to count how many times individuals 8 and 22 appeared in the data. The `-w` option matches the individual ID, and the `-c` counts the # of matching lines.
 
 
 
@@ -56,7 +56,7 @@ Individual 8 was sampled \*\*17 times\*\*, and individual 22 was sampled \*\*5 t
 
 
 
-I wrote a script that takes the data filename as $1 and the individual ID as $2. The script uses `grep` to match the individual ID and count the number of matching lines.
+I wrote a script that takes the data filename as $1 and the individual ID as $2. The script uses 'cut' and `grep` to match the individual ID and count the number of matching lines.
 
 
 
