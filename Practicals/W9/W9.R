@@ -1,0 +1,110 @@
+# Obtaining a list of the files in the folder containing the files
+files <- list.files("matrices")
+files
+
+# Reading one matrix file to check the if data works
+mat <- read.table(paste("matrices/", files[1], sep=""))
+mat
+
+# Finding the number of rows and columns in the matrix
+nrow(mat)
+ncol(mat)
+
+
+# Calculate the proportion of 1s and 0s in the matrix
+total_entries <- nrow(mat) * ncol(mat)
+p_1 <- sum(mat) / total_entries
+p_0 <- 1 - p_1
+
+p_1
+p_0
+
+
+# Creating empty vectors to store the results for each matrix file
+file_names <- c()
+Nrow <- c()
+Ncol <- c()
+p_1 <- c()
+p_0 <- c()
+
+# Loop through every matrix file and calculate its statistics
+for(i in 1:length(files)){
+  
+  mat <- read.table(paste("matrices/", files[i], sep=""))
+  
+  file_names[i] <- files[i]
+  Nrow[i] <- nrow(mat)
+  Ncol[i] <- ncol(mat)
+  
+  total_entries <- Nrow[i] * Ncol[i]
+  
+  p_1[i] <- sum(mat) / total_entries
+  p_0[i] <- 1 - p_1[i]
+}
+
+## Checking to see if the ouput is working
+file_names
+Nrow
+Ncol
+p_1
+p_0
+
+# Combine the results into one
+MatrixStats <- data.frame(File = file_names, Nrow = Nrow, Ncol = Ncol, p_1 = p_1, p_0 = p_0)
+MatrixStats
+
+# Save the results in a tsv file
+write.table(MatrixStats, file="MatrixStats.tsv", sep="\t", row.names=F, col.names=T)
+
+#-------------------------------------------------------------------------------------------
+# Leaf Area
+
+## Instal EBImage
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install("EBImage")
+
+library(EBImage)
+
+source("leafarea/getArea.R")
+
+# Getting a list of the files in the leafarea folder
+leaf_files <- list.files("leafarea")
+leaf_files
+
+# Keeping only the leaf image files
+leaf_files <- leaf_files[3:46]
+leaf_files
+
+# Test the getArea function on one leaf image
+getArea(paste("leafarea/", leaf_files[1], sep=""))
+
+
+# Looping through every leaf image and gettings its area
+leaf_area <- c()
+for(i in 1:length(leaf_files)){
+  leaf_area[i] <- getArea(paste("leafarea/", leaf_files[i], sep=""))
+}
+leaf_area
+
+# Storing the image names and leaf areas 
+results <- data.frame(File = leaf_files, Area = leaf_area)
+results
+
+# Calculate the change in leaf area from t1 to t2 for each plant
+growth <- results$Area[23:44] - results$Area[1:22]
+growth
+
+# The average change in leaf area
+mean(growth)
+
+# Storing the results for each plant and its change in leaf area
+results <- data.frame(File = leaf_files[1:22],
+                      t1_Area = leaf_area[1:22],
+                      t2_Area = leaf_area[23:44],
+                      Growth = growth)
+
+results
+
+# Save the leaf area results as a CSV file
+write.csv(results, file="LeafareaResults.csv", row.names=F)
